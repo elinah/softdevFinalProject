@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Authenticate</title>
+	</head>
+  
+  <body>
+    <h3>If you have an account, please log in:</h3>
+    <form action="/login/" method="POST">
+				Username: <input type="text" name="username"> <br>
+				Password: <input type="password" name="password"> <br>
+				<input type="submit" name="button" value="Login" action="/auth/">
+			</form>
+
+			<h3>If you want an account, please register:</h3>
+			<form action="/register/" method="POST">
+
+				Username: <input type="text" name="username"> <br>
+				Password: <input type="password" name="password"> <br>
+				Confirm password: <input type="password" name="confirm_password"> <br>
+				<input type="submit" name="button" value="Register" action="/auth/">
+			</form>
+      
+    <br>
+    <h1> {{ message }} </h1>
+  </body>
+
+</html>
