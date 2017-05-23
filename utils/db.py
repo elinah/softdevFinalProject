@@ -5,8 +5,62 @@ db = None
 
 def createDB():
   global c
-  c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT, password TEXT, name TEXT, grade INTEGER);')
-  c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER, club_name TEXT);')
+  c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT, password TEXT, name TEXT, grade INTEGER, member TEXT, admin TEXT);')
+  c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER, club_name TEXT, club_members TEXT, club_admins TEXT);')
+
+def getMemName(id):
+  initializeDB()
+  c.execute('SELECT name FROM users WHERE (user_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def getMemGrade(id):
+  initializeDB()
+  c.execute('SELECT grade FROM users WHERE (user_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def getMemMembers(id):
+  initializeDB()
+  c.execute('SELECT member FROM users WHERE (user_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def getMemAdmins(id):
+  initializeDB()
+  c.execute('SELECT admin FROM users WHERE (user_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def getClubName(id):
+  initializeDB()
+  c.execute('SELECT club_name FROM clubs WHERE (club_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def getClubMembers(id):
+  initializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def getClubAdmins(id):
+  initializeDB()
+  c.execute('SELECT club_admins FROM clubs WHERE (club_id = ?);',[id])
+  out = c.fetchall()
+  closeDB()
+  return out
+
+def addClub(name, members, admins):
+  initializeDB()
+  c.execute('INSERT INTO clubs (club_name, club_members, club_admins) VALUES (?,?,?);',(name, members, admins))
+  closeDB()
 
 def initializeDB():
   global c, db
