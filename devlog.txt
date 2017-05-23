@@ -1,1 +1,7 @@
-sharonL -- 2017-5-11 07:30 Added DESIGN.pdf to repository
+sharonL -- 2017-5-11 07:30 
+	Added DESIGN.pdf to repository
+
+elinaH -- 2017-5-22 01:28
+	Started app.py with basic templates
+	Started db.py, which deals with creating the database
+	Added a .gitignore
