@@ -65,6 +65,12 @@ def register():
     msg = 'Please fill out all fields!'
   return redirect(url_for('default'))
 
+@app.route("/logout/")
+def logout():
+  if isLoggedIn():
+    session.pop("username")
+  return redirect(url_for("default"))
+
 @app.route('/home/')
 def home():
   return render_template('home.html')

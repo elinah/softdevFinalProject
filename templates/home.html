@@ -1,11 +1,25 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-	<head>
-		<title>Dashboard</title>
-	</head>
-  
-  <body>
+ {% block css %} 
+
+<style type="text/css">
+
+body {
+text-align: center;
+}
+
+.content{
+  padding-top:2vh;
+}
+
+</style>
+
+ {% endblock %}
+
+{% block content %}
+
+<div class="content">
+
     <h1>Current clubs:</h1>
       <ol>
         <li>Red Cross</li>
@@ -19,7 +33,7 @@
       </ol>
     
     <h1>Clubs you're an admin of:</h1>
-    
-  </body>
 
-</html>
+</div>
+
+{% endblock %}

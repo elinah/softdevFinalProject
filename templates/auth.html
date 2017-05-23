@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-	<head>
-		<title>Authenticate</title>
-	</head>
-  
-  <body>
+<!--   <body>
     <h3>If you have an account, please log in:</h3>
     <form action="/login/" method="POST">
 				Username: <input type="text" name="username"> <br>
@@ -22,8 +17,47 @@
 				<input type="submit" name="button" value="Register" action="/auth/">
 			</form>
       
-    <br>
-    <h1> {{ message }} </h1>
-  </body>
+    <br> -->
 
-</html>
+
+
+
+{% block content %}
+
+
+
+	    <div class="container">
+	    <center>
+       <h1 style="color: red;"> {{ message }} </h1>
+
+
+	    <div style="color: white; max-width: 314px;" class="co-12">
+			<h1 class="display-4">LOGIN:</h1>
+			<p><i>If you have an account, please login.</i></p>
+			<form action="/login/" method="POST">
+
+				Username: <input class="form-control" type="text" name="username"> <br>
+				Password:&thinsp; <input class="form-control" type="password" name="password"> <br>
+				<input class="btn btn-success btn-block" type="submit" name="button" value="Login" action="/auth/">
+			</form>
+		</div>
+		<br>
+		<!--Register-->
+		<div style="color: white;max-width:314px;" class="co-12">
+			<h1 class="display-4">REGISTER:</h1>
+			<p><i>If you want an account, please register:</i></p>
+			<form action="/register/" method="POST">
+
+				Username: <input class="form-control" type="text" name="username"> <br>
+				Password: <input class="form-control" type="password" name="password"> <br>
+				Confirm password: <input class="form-control" type="password" name="confirm_password"> <br>
+
+				<input class="btn btn-success btn-block" type="submit" name="button" value="Register" action="/auth/">
+			</form>
+		</div>
+		</center>
+		</div>
+
+		 
+
+{% endblock %}
