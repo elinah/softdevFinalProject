@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+ {% block css %}
+
+<style type="text/css">
+
+body {
+text-align: center;
+}
+
+.content{
+  padding-top:2vh;
+}
+
+</style>
+
+ {% endblock %}
+
+{% block content %}
+
+<div class="content">
+
+    <h1>Red Club</h1>
+    <h3>Club Description</h3>
+
+    <h1>Attendance</h1>
+
+    <h1>Announcements</h1>
+
+</div>
+
+{% endblock %}

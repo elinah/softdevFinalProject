@@ -15,7 +15,7 @@ def isLoggedIn():
   return False
 
 def hash(pw):
-  return hashlib.sha256(pw.encode('utf-8')).hexdigest()
+  return hashlib.sha256(pw).hexdigest()
 
 @app.route('/')
 def default():
@@ -70,10 +70,6 @@ def logout():
   if isLoggedIn():
     session.pop("username")
   return redirect(url_for("default"))
-
-@app.route('/club/')
-def club():
-  return render_template('club.html')
 
 @app.route('/home/')
 def home():
