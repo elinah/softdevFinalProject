@@ -5,3 +5,7 @@ elinaH -- 2017-5-22 01:28
 	Started app.py with basic templates
 	Started db.py, which deals with creating the database
 	Added a .gitignore
+
+sharonL -- 2017-5-22 11:01
+	Added accessor and updating methods
+	Added club page 
