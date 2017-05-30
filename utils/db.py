@@ -3,11 +3,16 @@ import sqlite3
 c = None
 db = None
 
+//Created database schema
 def createDB():
   global c
   c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT, password TEXT, name TEXT, grade INTEGER, member TEXT, admin TEXT);')
   c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER, club_name TEXT, club_members TEXT, club_admins TEXT);')
 
+//**********************************************
+// Accessor Methods
+//**********************************************
+  
 def getMemName(id):
   initializeDB()
   c.execute('SELECT name FROM users WHERE (user_id = ?);',[id])
@@ -57,11 +62,10 @@ def getClubAdmins(id):
   closeDB()
   return out
 
-def addClub(name, members, admins):
-  initializeDB()
-  c.execute('INSERT INTO clubs (club_name, club_members, club_admins) VALUES (?,?,?);',(name, members, admins))
-  closeDB()
-
+//**********************************************
+// Initialize, close DB
+//**********************************************
+  
 def initializeDB():
   global c, db
   file = 'data/data.db'
@@ -74,11 +78,21 @@ def closeDB():
   db.commit()
   db.close()
 
-def addUser(username, password):
-  initializeDB()
-  c.execute('INSERT INTO users (username, password) VALUES(?, ?);', (username, password))
+def deleteUserFromClub(name, username):
+  intializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);', (name))
+  allMembers = c.fetchall()
+  allMembers = allMembers.split(',').remove(username)
+  allMembers = ','.join(allMembers)
+  c.execute('UPDATE clubs SET (club_members = allMembers) WHERE (club_name = ?);', (name))
+  deleteClubFromUser(name, username)
   closeDB()
+  
 
+//***********************************************
+// Authentication Methods
+//***********************************************
+  
 def isRegistered(username):
   initializeDB()
   c.execute('SELECT * FROM users WHERE (username = ?);', [username])
