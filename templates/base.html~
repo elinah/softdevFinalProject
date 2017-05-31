@@ -27,7 +27,7 @@
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
         <!-- <li class="{% block active2 %}{% endblock %}"><a href="/class/">Class</a></li> -->
-	<li><a href="/add-clubs/">Add Club</a></li>
+
   <!--<li><a href="/browse">Browse</a></li>-->
       </ul>
 
