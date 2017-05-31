@@ -8,6 +8,14 @@ body {
 text-align: center;
 }
 
+a:link {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
 .content{
   padding-top:2vh;
 }
@@ -21,16 +29,16 @@ text-align: center;
 <div class="content">
 
     <h1>Current clubs:</h1>
-      <ol>
-        <li>Red Cross</li>
+      <ul>
+        <li><a href="/club/">Red Cross</a></li>
         <li>Key Club</li>
         <li>Knitting</li>
-      </ol>
+      </ul>
     
     <h1>Clubs you're a member of:</h1>
-      <ol>
+      <ul>
         <li>Knitting</li>
-      </ol>
+      </ul>
     
     <h1>Clubs you're an admin of:</h1>
 
