@@ -3,15 +3,15 @@ import sqlite3
 c = None
 db = None
 
-//Created database schema
+#Created database schema
 def createDB():
   global c
   c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT, password TEXT, name TEXT, grade INTEGER, member TEXT, admin TEXT);')
   c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER, club_name TEXT, club_members TEXT, club_admins TEXT);')
 
-//**********************************************
-// Accessor Methods
-//**********************************************
+#**********************************************
+# Accessor Methods
+#**********************************************
   
 def getMemName(id):
   initializeDB()
@@ -62,9 +62,9 @@ def getClubAdmins(id):
   closeDB()
   return out
 
-//**********************************************
-// Initialize, close DB
-//**********************************************
+#**********************************************
+# Initialize, close DB
+#**********************************************
   
 def initializeDB():
   global c, db
@@ -89,9 +89,9 @@ def deleteUserFromClub(name, username):
   closeDB()
   
 
-//***********************************************
-// Authentication Methods
-//***********************************************
+#***********************************************
+# Authentication Methods
+#***********************************************
   
 def isRegistered(username):
   initializeDB()
