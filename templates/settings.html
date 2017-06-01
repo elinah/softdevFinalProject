@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="content">
+
+    <p>If you would like to change your password, please enter your information 	below:</p>
+    <form action="/settings/" method="POST">
+	Current password: <input type="password" name="currPass"> <br>
+	New password: <input type="password" name="newPass"> <br>
+	Confirm password: <input type="password" name="confirmPass"> <br>
+	<input type="submit" name="changePass" value="Change Password">
+    </form>
+
+    <p>If you would like to change your name, please enter your information 	below:</p>
+    <form action="/settings/" method="POST">
+	New name: <input type="text" name="newName"> <br>
+	<input type="submit" name="changeName" value="Change Name">
+    </form>
+
+    <p>If you would like to change your grade, please enter your information 	below:</p>
+    <form action="/settings/" method="POST">
+	New grade: <input type="text" name="newGrade"> <br>
+	<input type="submit" name="changeGrade" value="Change Grade">
+    </form>
+</div>
+
+{% endblock %}

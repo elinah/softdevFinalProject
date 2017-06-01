@@ -10,7 +10,6 @@ def createDB():
   c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT, password TEXT, name TEXT, grade INTEGER, member TEXT, admin TEXT);')
   c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER, club_name TEXT, club_members TEXT, club_admins TEXT);')
 
-<<<<<<< HEAD
 
 #**********************************************
 # Accessor Methods
@@ -22,11 +21,6 @@ def getMemId(name):
   out = c.fetchall()
   closeDB()
   return out
-=======
-#**********************************************
-# Accessor Methods
-#**********************************************
->>>>>>> 28a8c23e95967192fe6069785798452234edb37d
   
 def getMemName(id):
   initializeDB()
@@ -77,7 +71,6 @@ def getClubAdmins(id):
   closeDB()
   return out
 
-<<<<<<< HEAD
 def getAllClubs():
   initializeDB()
   c.execute('SELECT club_name FROM clubs;')
@@ -94,8 +87,6 @@ def updateGrade(username, newGrade):
   c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade, username))
   closeDB()
 
-=======
->>>>>>> 28a8c23e95967192fe6069785798452234edb37d
 #**********************************************
 # Initialize, close DB
 #**********************************************

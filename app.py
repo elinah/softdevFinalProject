@@ -93,6 +93,10 @@ def home():
   clubs = db.getAllClubs()
   return render_template('home.html', your_clubs=your_clubs, clubs=clubs, your_admin=your_admin)
 
+@app.route('/settings/')
+def settings():
+  return render_template('settings.html')
+
 if __name__ == '__main__':
   app.debug = True
   app.run()
