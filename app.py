@@ -80,10 +80,13 @@ def club():
 def add_clubs():
   return render_template('add_club.html')
 
+@app.route('/clubpage/<club>/')
+def clubpage(club):
+  return render_template('club.html', clubName = club, clubDesc = db.getClubDesc(club)[0][0])
 
 @app.route('/add-new-club/', methods=["GET", "POST"])
 def add_new_club():
-  db.addNewClub(request.form['club'],session['username'])
+  db.addNewClub(request.form['club'],session['username'],request.form['description'])
   return redirect(url_for('home'))
 
 @app.route('/home/')

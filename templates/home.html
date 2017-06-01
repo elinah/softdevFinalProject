@@ -34,21 +34,21 @@ ul{
     <h1>Current clubs:</h1>
       <ul>
 	{% for club in clubs %}
-        <li>{{club[0]}}</li>
+        <li><a href="/clubpage/{{club[0]}}/">{{club[0]}}</a></li>
 	{% endfor %}
       </ul>
     
     <h1>Clubs you're a member of:</h1>
       <ul>
 	{% for club in your_clubs %}
-        <li>{{club[0]}}</li>
+        <li><a href="/clubpage/{{club[0]}}/">{{club[0]}}</a></li>
 	{% endfor %}
       </ul>
     
     <h1>Clubs you're an admin of:</h1>
     <ul>
       {% for club in your_admin %}
-      <li>{{club[0]}}</li>
+      <li><a href="/clubpage/{{club[0]}}/">{{club[0]}}</a></li>
       {% endfor %} 
     </ul>
 

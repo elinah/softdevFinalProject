@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
  {% block css %}
-
+<link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../static/css/style.css" rel="stylesheet">
 <style type="text/css">
 
 body {
@@ -13,29 +14,23 @@ text-align: center;
 }
 
 </style>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
- {% endblock %}
+{% endblock %}
 
 {% block content %}
 
 <div class="content">
 
-    <h1>Red Club</h1>
-    <h5>The American Red Cross is the official chapter of the International Red Cross Club.</h5>
+    <h1>{{clubName}}</h1>
+    <h5>{{clubDesc}}</h5>
     <br><br><br><br>
     <h1>Attendance</h1>
     <br><br><br><br>
     <h1>Announcements</h1>
     <div class="w3-card">
       <p>Monday: May 12,2017 - Club meeting today!</p><br>
-    </div><Br>
-    <div class="w3-card">
-      <p>Monday: May 8,2017 - Club meeting today!</p><br>
-    </div><br>
-    <div class="w3-card">
-      <p>Monday: May 1,2017 - Club meeting today!</p><br>
     </div>
+</div>
 
 </div>
 

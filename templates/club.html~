@@ -13,6 +13,7 @@ text-align: center;
 }
 
 </style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
  {% endblock %}
 
@@ -21,11 +22,20 @@ text-align: center;
 <div class="content">
 
     <h1>Red Club</h1>
-    <h3>Club Description</h3>
-
+    <h5>The American Red Cross is the official chapter of the International Red Cross Club.</h5>
+    <br><br><br><br>
     <h1>Attendance</h1>
-
+    <br><br><br><br>
     <h1>Announcements</h1>
+    <div class="w3-card">
+      <p>Monday: May 12,2017 - Club meeting today!</p><br>
+    </div><Br>
+    <div class="w3-card">
+      <p>Monday: May 8,2017 - Club meeting today!</p><br>
+    </div><br>
+    <div class="w3-card">
+      <p>Monday: May 1,2017 - Club meeting today!</p><br>
+    </div>
 
 </div>
 

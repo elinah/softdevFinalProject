@@ -29,25 +29,10 @@ a:visited {
 <div class="content">
 
     <h1>Add a club</h1>
-      <ul>
-	{% for club in clubs %}
-        <li>{{club}}</li>
-	{% endfor %}
-      </ul>
-
-    <h1>Clubs you're a member of:</h1>
-      <ul>
-	{% for club in your_clubs %}
-        <li>{{club}}</li>
-	{% endfor %}
-      </ul>
-
-    <h1>Clubs you're an admin of:</h1>
-    <ul>
-      {% for club in your_admin%}
-      <li>{{club}}</li>
-      {% endfor %}
-    </ul>
+    <form action="/add-new-club/" method="POST">
+      <input type="text" name="club">
+      <input type="submit" class="btn btn-success" name="submit" value="Submit">
+    </form>
 
 </div>
 

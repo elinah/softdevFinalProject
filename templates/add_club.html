@@ -20,6 +20,15 @@ a:visited {
   padding-top:2vh;
 }
 
+input, select, textarea{
+    color: #ff0000;
+}
+
+textarea:focus, input:focus {
+    color: #ff0000;
+}
+
+
 </style>
 
  {% endblock %}
@@ -30,7 +39,8 @@ a:visited {
 
     <h1>Add a club</h1>
     <form action="/add-new-club/" method="POST">
-      <input type="text" name="club">
+      Club Name: <input type="text" name="club"><br><br>
+      Club Description: <input type="text" name="description"><br><br>
       <input type="submit" class="btn btn-success" name="submit" value="Submit">
     </form>
 

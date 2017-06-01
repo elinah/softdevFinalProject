@@ -57,6 +57,13 @@ def getClubName(id):
   closeDB()
   return out
 
+def getClubDesc(name):
+  initializeDB()
+  c.execute('SELECT description FROM clubs WHERE (club_name = ?);',(name,))
+  out = c.fetchall()
+  closeDB()
+  return out
+
 def getClubMembers(id):
   initializeDB()
   c.execute('SELECT club_members FROM clubs WHERE (club_id = ?);',[id])
@@ -136,18 +143,22 @@ def authUser(username, password):
     return False
 
 #Adds club, adds club to admin+member list for founding user - WORKS
-def addNewClub(name, username):
+def addNewClub(name, username,description):
   initializeDB()
   c.execute('SELECT club_name from clubs;')
   all_clubs = c.fetchall()
   all_clubs = [a[0] for a in all_clubs]
   if str(name) not in all_clubs:
-    c.execute('INSERT INTO clubs (club_name, club_members, club_admins) VALUES (?,?,?);', (name,username,username))
+    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description) VALUES (?,?,?,?);', (name,username,username,description))
   c.execute('SELECT member from users WHERE (username = ?);',(username,))
   member_clubs = c.fetchall()
   if(member_clubs):
     member_clubs = list(member_clubs[0])
-    member_clubs = member_clubs[0].split(",")
+    print(member_clubs)
+    if (member_clubs[0] != None):
+      member_clubs = member_clubs[0].split(",")
+    else:
+      member_clubs = []
   if str(name) not in member_clubs:
     member_clubs.append(name)
   member_clubs = ','.join(member_clubs)
@@ -156,7 +167,10 @@ def addNewClub(name, username):
   admin_clubs = c.fetchall()
   if(admin_clubs):
     admin_clubs = list(admin_clubs[0])
-    admin_clubs = admin_clubs[0].split(",")
+    if (admin_clubs[0] != None):
+      admin_clubs = admin_clubs[0].split(",")
+    else:
+      admin_clubs = []
   if str(name) not in admin_clubs:
     admin_clubs.append(name)
   admin_clubs = ','.join(admin_clubs)
@@ -174,9 +188,13 @@ def deleteClub(name):
   count = 1
   if (all_members):
     for i in all_members:
-      i = list(i)[0].split(",")
-      if str(name) in i:
-        i.remove(str(name))
+      print(i)
+      if (i[0] != None):
+        i = list(i)[0].split(",")
+        if str(name) in i:
+          i.remove(str(name))
+      else:
+        i = []
       i = ",".join(str(j) for j in i)
       c.execute('UPDATE users SET member = ? WHERE (user_id = ?);',(i,count))
       count += 1
@@ -186,14 +204,12 @@ def deleteClub(name):
   if (all_members):
     for i in all_members:
       if(i[0] != None):
-        print(i)
         i = list(i)[0].split(",")
         if str(name) in i:
           i.remove(str(name))
       else:
         i = []
       i = ",".join(str(j) for j in i)
-      print(i)
       c.execute('UPDATE users SET admin = ? WHERE (user_id = ?);',(i,count))
       count += 1
   closeDB()
