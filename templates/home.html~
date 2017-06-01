@@ -30,17 +30,24 @@ a:visited {
 
     <h1>Current clubs:</h1>
       <ul>
-        <li><a href="/club/">Red Cross</a></li>
-        <li>Key Club</li>
-        <li>Knitting</li>
+	{% for club in clubs %}
+        <li>{{club}}</li>
+	{% endfor %}
       </ul>
     
     <h1>Clubs you're a member of:</h1>
       <ul>
-        <li>Knitting</li>
+	{% for club in your_clubs %}
+        <li>{{club}}</li>
+	{% endfor %}
       </ul>
     
     <h1>Clubs you're an admin of:</h1>
+    <ul>
+      {% for club in your_admin %}
+      <li>{{club}}</li>
+      {% endfor %} 
+    </ul>
 
 </div>
 

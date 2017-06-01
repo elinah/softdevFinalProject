@@ -20,6 +20,9 @@ a:visited {
   padding-top:2vh;
 }
 
+ul{
+  list-style: none;
+}
 </style>
 
  {% endblock %}
@@ -31,21 +34,21 @@ a:visited {
     <h1>Current clubs:</h1>
       <ul>
 	{% for club in clubs %}
-        <li>{{club}}</li>
+        <li>{{club[0]}}</li>
 	{% endfor %}
       </ul>
     
     <h1>Clubs you're a member of:</h1>
       <ul>
 	{% for club in your_clubs %}
-        <li>{{club}}</li>
+        <li>{{club[0]}}</li>
 	{% endfor %}
       </ul>
     
     <h1>Clubs you're an admin of:</h1>
     <ul>
       {% for club in your_admin %}
-      <li>{{club}}</li>
+      <li>{{club[0]}}</li>
       {% endfor %} 
     </ul>
 

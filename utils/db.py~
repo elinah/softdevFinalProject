@@ -79,21 +79,12 @@ def getAllClubs():
   return out
 
 #**********************************************
-# Updating Methods
-#**********************************************
-
-def updateGrade(username, newGrade):
-  initializeDB()
-  c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade, username))
-  closeDB()
-
-#**********************************************
 # Initialize, close DB
 #**********************************************
   
 def initializeDB():
   global c, db
-  file = 'data/data.db'
+  file = '../data/data.db'
   db = sqlite3.connect(file)
   c = db.cursor()
   createDB()

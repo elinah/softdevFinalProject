@@ -3,6 +3,7 @@ from utils import db
 import hashlib
 
 app = Flask(__name__)
+
 app.secret_key = 'key'
 
 msg = ' '
@@ -75,9 +76,22 @@ def logout():
 def club():
   return render_template('club.html')
 
+@app.route('/add-clubs/')
+def add_clubs():
+  return render_template('add_club.html')
+
+
+@app.route('/add-new-club/', methods=["GET", "POST"])
+def add_new_club():
+  db.addNewClub(request.form['club'],session['username'])
+  return redirect(url_for('home'))
+
 @app.route('/home/')
 def home():
-  return render_template('home.html')
+  your_clubs = db.getMemMembers(session['username'])
+  your_admin = db.getMemAdmins(session['username'])
+  clubs = db.getAllClubs()
+  return render_template('home.html', your_clubs=your_clubs, clubs=clubs, your_admin=your_admin)
 
 if __name__ == '__main__':
   app.debug = True

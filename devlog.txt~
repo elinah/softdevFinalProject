@@ -9,9 +9,3 @@ elinaH -- 2017-5-22 01:28
 sharonL -- 2017-5-22 11:01
 	Added accessor and updating methods
 	Added club page 
-
-sharonL -- 2017-5-30 02:01
-	Added additional methods to db.py
-
-sharonL -- 2017-5-31 09:41
-	Added jinja templating to display clubs for members
