@@ -25,6 +25,20 @@ text-align: center;
     <h5>{{clubDesc}}</h5>
     <br><br><br><br>
     <h1>Attendance</h1>
+    
+    <div class="row">
+    {% for person in members %}
+      <div class="col-sm-4">{{person}}</div>
+    {% endfor %}
+    </div>
+    
+    <svg width="960" height="500"></svg>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    
+    <script>
+      
+    </script>
+
     <br><br><br><br>
     <h1>Announcements</h1>
     <div class="w3-card">

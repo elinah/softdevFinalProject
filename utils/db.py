@@ -94,9 +94,11 @@ def getClubDesc(name):
 def getClubMembers(name):
   initializeDB()
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',[name])
-  out = c.fetchall()
+  allMembers = c.fetchall()
+  allMembers = [a for a in allMembers[0][0]]
+  print(allMembers)
   closeDB()
-  return out[0]
+  return allMembers
 
 #print(getClubMembers("Gam"))
 

@@ -82,7 +82,8 @@ def add_clubs():
 
 @app.route('/clubpage/<club>/')
 def clubpage(club):
-  return render_template('club.html', clubName = club, clubDesc = db.getClubDesc(club)[0][0])
+  allMembers = db.getClubMembers(club)
+  return render_template('club.html', clubName = club, clubDesc = db.getClubDesc(club)[0][0], members = allMembers)
 
 @app.route('/add-new-club/', methods=["GET", "POST"])
 def add_new_club():
