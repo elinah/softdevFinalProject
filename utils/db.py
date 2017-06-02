@@ -130,6 +130,24 @@ def updateGrade(username, newGrade):
   c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade, username))
   closeDB()
 
+#Changes password of user
+def changePass(newPass, username):
+  initializeDB()
+  c.execute('UPDATE users SET password = ? WHERE (username = ?);',(newPass,username))
+  closeDB()
+
+#Changes name of user
+def changeName(newName, username):
+  initializeDB()
+  c.execute('UPDATE users SET name = ? WHERE (username = ?);',(newName,username))
+  closeDB()
+
+#Changes grade of user
+def changeGrade(newGrade, username):
+  initializeDB()
+  c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade,username))
+  closeDB()
+
 #***********************************************
 # Authentication Methods
 #***********************************************
