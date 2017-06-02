@@ -23,7 +23,12 @@ text-align: center;
 
     <h1>{{clubName}}</h1>
     <h5>{{clubDesc}}</h5>
-    <br><br><br><br>
+    <br><br>
+
+    <form action="/join/{{clubName}}/" method="POST">
+      <input  type="submit" class="btn btn-success" name="join" value="Join Club">
+    </form>
+    <br><br>
     <h1>Attendance</h1>
     
     <div class="row">

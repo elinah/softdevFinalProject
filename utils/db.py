@@ -17,7 +17,7 @@ def createDB():
 
 def initializeDB():
   global c, db
-  file = '../data/data.db'
+  file = 'data/data.db'
   db = sqlite3.connect(file)
   c = db.cursor()
   createDB()
@@ -97,9 +97,14 @@ def getClubMembers(name):
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',[name])
   allMembers = c.fetchall()
   allMembers = [a for a in allMembers[0]]
-  allKeys = json.loads(allMembers[0].replace("'",'"')).keys()
-  allValues = json.loads(allMembers[0].replace("'",'"')).values()
+  allMembers = str(allMembers[0]).replace("'",'"').replace("u","")
+  print(allMembers)
+  c.execute('UPDATE clubs SET club_members = ? where (club_name = ?);',(allMembers, name))
+  allKeys = json.loads(allMembers).keys()
+  allValues = json.loads(str(allMembers).replace("'",'"')).values()
   lista = []
+  allKeys = list(allKeys)
+  allValues = list(allValues)
   for a in range(len(allKeys)):
     lista.append(str(allKeys[a])+" : "+str(allValues[a]))
   closeDB()
@@ -189,9 +194,11 @@ def addUserToClub(name, username):
   initializeDB()
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
   allMembers = c.fetchall()
+  print(allMembers)
   allMembers = json.loads(allMembers[0][0].replace("'",'"'))
   allMembers[username] = 0
-  allMembers = str(allMembers)
+  allMembers = str(allMembers).replace("'",'"')
+  print(allMembers)
   c.execute('UPDATE clubs SET club_members = ? WHERE (club_name = ?);',(allMembers, name))
   closeDB()
 
@@ -203,7 +210,7 @@ def addNewClub(name, username,description):
   c.execute('SELECT club_name from clubs;')
   all_clubs = c.fetchall()
   all_clubs = [a[0] for a in all_clubs]
-  memberFormat = "{"+username+":0}"
+  memberFormat = '{"'+username+'":0}'
   if str(name) not in all_clubs:
     c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description) VALUES (?,?,?,?);', (name,memberFormat,username,description))
   c.execute('SELECT member from users WHERE (username = ?);',(username,))
