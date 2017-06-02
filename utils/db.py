@@ -1,5 +1,5 @@
 from itertools import chain
-import sqlite3
+import sqlite3, json
 
 c = None
 db = None
@@ -7,8 +7,35 @@ db = None
 #Created database schema
 def createDB():
   global c
-  c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT, password TEXT, name TEXT, grade INTEGER, member TEXT, admin TEXT);')
-  c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER, club_name TEXT, club_members TEXT, club_admins TEXT);')
+  # attendance: {member:days,member:days}
+  c.execute('CREATE TABLE IF NOT EXISTS clubs (club_id INTEGER PRIMARY KEY NOT NULL, club_name TEXT, club_members TEXT, club_admins TEXT, description TEXT, announcements TEXT, attendance TEXT);')
+  c.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY NOT NULL, username TEXT NOT NULL, password TEXT, name TEXT, grade INTEGER, member TEXT, admin TEXT, attendance TEXT);')
+
+#**********************************************                                                                                                                                                             
+# Initialize, close DB                                                                                                                                                                                      
+#**********************************************                                                                                                                                                             
+
+def initializeDB():
+  global c, db
+  file = 'data/data.db'
+  db = sqlite3.connect(file)
+  c = db.cursor()
+  createDB()
+
+def closeDB():
+  global db
+  db.commit()
+  db.close()
+
+def deleteUserFromClub(name, username):
+  intializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);', (name))
+  allMembers = c.fetchall()
+  allMembers = allMembers.split(',').remove(username)
+  allMembers = ','.join(allMembers)
+  c.execute('UPDATE clubs SET (club_members = allMembers) WHERE (club_name = ?);', (name))
+  deleteClubFromUser(name, username)
+  closeDB()
 
 
 #**********************************************
@@ -64,19 +91,21 @@ def getClubDesc(name):
   closeDB()
   return out
 
-def getClubMembers(id):
+def getClubMembers(name):
   initializeDB()
-  c.execute('SELECT club_members FROM clubs WHERE (club_id = ?);',[id])
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',[name])
   out = c.fetchall()
   closeDB()
-  return out
+  return out[0]
 
-def getClubAdmins(id):
+#print(getClubMembers("Gam"))
+
+def getClubAdmins(name):
   initializeDB()
-  c.execute('SELECT club_admins FROM clubs WHERE (club_id = ?);',[id])
+  c.execute('SELECT club_admins FROM clubs WHERE (club_name = ?);',[name])
   out = c.fetchall()
   closeDB()
-  return out
+  return out[0]
 
 def getAllClubs():
   initializeDB()
@@ -93,33 +122,6 @@ def updateGrade(username, newGrade):
   initializeDB()
   c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade, username))
   closeDB()
-
-#**********************************************
-# Initialize, close DB
-#**********************************************
-  
-def initializeDB():
-  global c, db
-  file = 'data/data.db'
-  db = sqlite3.connect(file)
-  c = db.cursor()
-  createDB()
-
-def closeDB():
-  global db
-  db.commit()
-  db.close()
-
-def deleteUserFromClub(name, username):
-  intializeDB()
-  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);', (name))
-  allMembers = c.fetchall()
-  allMembers = allMembers.split(',').remove(username)
-  allMembers = ','.join(allMembers)
-  c.execute('UPDATE clubs SET (club_members = allMembers) WHERE (club_name = ?);', (name))
-  deleteClubFromUser(name, username)
-  closeDB()
-  
 
 #***********************************************
 # Authentication Methods
@@ -142,14 +144,43 @@ def authUser(username, password):
   else:
     return False
 
+# Adds 1 to attendance for a member - WORKS
+def addAttendance(name, username):
+  initializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
+  allMembers = c.fetchall()
+  print(allMembers[0][0])
+  allMembers = json.loads(allMembers[0][0].replace("'",'"'))
+  allMembers[username] += 1
+  allMembers = str(allMembers)
+  print(allMembers)
+  c.execute('UPDATE clubs SET club_members = ? WHERE (club_name = ?);',(allMembers, name))
+  closeDB()
+
+#addAttendance('Gam','gerry')
+
+# Adds member to club - WORKS (for simple case)
+def addUserToClub(name, username):
+  initializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
+  allMembers = c.fetchall()
+  allMembers = json.loads(allMembers[0][0].replace("'",'"'))
+  allMembers[username] = 0
+  allMembers = str(allMembers)
+  c.execute('UPDATE clubs SET club_members = ? WHERE (club_name = ?);',(allMembers, name))
+  closeDB()
+
+#addUserToClub('Gam','gerry')
+
 #Adds club, adds club to admin+member list for founding user - WORKS
 def addNewClub(name, username,description):
   initializeDB()
   c.execute('SELECT club_name from clubs;')
   all_clubs = c.fetchall()
   all_clubs = [a[0] for a in all_clubs]
+  memberFormat = "{"+username+":0}"
   if str(name) not in all_clubs:
-    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description) VALUES (?,?,?,?);', (name,username,username,description))
+    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description) VALUES (?,?,?,?);', (name,memberFormat,username,description))
   c.execute('SELECT member from users WHERE (username = ?);',(username,))
   member_clubs = c.fetchall()
   if(member_clubs):
@@ -241,3 +272,23 @@ def addAdminToUser(name, username):
     members = members+','+name
     c.execute('UPDATE users SET (admin = ?) WHERE (username = ?);',(members,username))
   closeDB()
+
+
+# Adds announcements - WORKS
+def addAnnouncements(name, announcement):
+  initializeDB()
+  c.execute('SELECT announcements FROM clubs WHERE (club_name = ?);',(name,))
+  allAnnounce = c.fetchall()
+  if(allAnnounce[0][0] != None):
+    allAnnounce = [a[0] for a in allAnnounce]
+  if(allAnnounce[0]!='' and allAnnounce[0] !=None):
+    allAnnounce = allAnnounce[0]+","+announcement
+  else:
+    allAnnounce = announcement
+  c.execute('UPDATE clubs SET announcements = ? WHERE (club_name = ?);',(allAnnounce,name))
+  closeDB()
+
+#addAnnouncements("Garl", "We are meeting in the bigger library!")
+
+# To Do: changeToAdmin, removeAdmin, changeGrade, changeName, changePassword, incorporate emails
+# 
