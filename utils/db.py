@@ -17,7 +17,7 @@ def createDB():
 
 def initializeDB():
   global c, db
-  file = 'data/data.db'
+  file = '../data/data.db'
   db = sqlite3.connect(file)
   c = db.cursor()
   createDB()
@@ -91,14 +91,19 @@ def getClubDesc(name):
   closeDB()
   return out
 
+# Returns club members + attendance - WORKS
 def getClubMembers(name):
   initializeDB()
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',[name])
   allMembers = c.fetchall()
-  allMembers = [a for a in allMembers[0][0]]
-  print(allMembers)
+  allMembers = [a for a in allMembers[0]]
+  allKeys = json.loads(allMembers[0].replace("'",'"')).keys()
+  allValues = json.loads(allMembers[0].replace("'",'"')).values()
+  lista = []
+  for a in range(len(allKeys)):
+    lista.append(str(allKeys[a])+" : "+str(allValues[a]))
   closeDB()
-  return allMembers
+  return lista
 
 #print(getClubMembers("Gam"))
 
@@ -292,5 +297,17 @@ def addAnnouncements(name, announcement):
 
 #addAnnouncements("Garl", "We are meeting in the bigger library!")
 
+# Checks if user is admin - WORKS
+def checkAdmin(name, username):
+  initializeDB()
+  c.execute('SELECT club_admins from clubs WHERE (club_name = ?);',(name,))
+  allAdmins = c.fetchall()
+  allAdmins = allAdmins[0][0]
+  closeDB()
+  return username in allAdmins
+
+#checkAdmin('Book Club','sharon')
+
 # To Do: changeToAdmin, removeAdmin, changeGrade, changeName, changePassword, incorporate emails
 # 
+
