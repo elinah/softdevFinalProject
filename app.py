@@ -82,9 +82,7 @@ def add_clubs():
 
 @app.route('/clubpage/<club>/', methods=["GET","POST"])
 def clubpage(club):
-  print("clubpageee")
   allMembers = db.getClubMembers(club)
-  print("club2")
   return render_template('club.html', clubName = club, clubDesc = db.getClubDesc(club)[0][0], members = allMembers)
 
 @app.route('/add-new-club/', methods=["GET", "POST"])
@@ -94,11 +92,15 @@ def add_new_club():
 
 @app.route('/join/<clubName>/', methods=["GET","POST"])
 def join(clubName):
-  print("success")
   db.addUserToClub(clubName, session['username'])
-#  return redirect(url_for('default'))
   return redirect('/clubpage/'+clubName+'/')
-#  return render_template("base.html")
+
+@app.route('/inc-attendance/<clubName>/<username>/', methods=["GET","POST"])
+def inc(clubName, username):
+  username = username.replace(' ','').replace(':','')
+  username = ''.join(i for i in username if not i.isdigit())
+  db.addAttendance(clubName, username)
+  return redirect('/clubpage/'+clubName+'/')
 
 @app.route('/home/')
 def home():
