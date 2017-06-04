@@ -24,6 +24,11 @@ sharonL -- 2017-6-2 12:19
 	Added admin checker, attendance recorder to club pages
 	Created attendance and club member/admin modifier
 
-sharon: -- 2017-6-3 9:39
+sharonL: -- 2017-6-3 9:39
 	Added pie chart
 	Need to: Add button to increment total days
+
+sharon: -- 2017-6-4 15:03
+	Added announcements to front page
+	Figuring out how to add ajax calls into project
+	Changing format of announcements to include club and timestamp
