@@ -63,17 +63,24 @@ def getMemGrade(id):
   closeDB()
   return out
 
+
+# WORKS
 def getMemMembers(name):
   initializeDB()
   c.execute('SELECT member FROM users WHERE (username = ?);',(name,))
   out = c.fetchall()
+  out = out[0][0]
+  out = out.split(",")
   closeDB()
   return out
 
+# WORKS
 def getMemAdmins(name):
   initializeDB()
   c.execute('SELECT admin FROM users WHERE (username = ?);',(name,))
   out = c.fetchall()
+  out = out[0][0]
+  out = out.split(",")
   closeDB()
   return out
 
@@ -91,6 +98,35 @@ def getClubDesc(name):
   closeDB()
   return out
 
+
+# Returns int of days present - WORKS
+def getPresent(name, username):
+  initializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
+  member = c.fetchall()
+  closeDB()
+  if (member != [] and member != None):
+    member = member[0][0]
+    member = json.loads(member.replace("'",'"')).get(username)
+  else:
+    return 0
+  return member
+
+# WORKS
+def getAbsent(name, username):
+  initializeDB()
+  c.execute('SELECT total FROM clubs WHERE (club_name = ?);',(name,))
+  member = c.fetchall()
+  member = member[0][0]
+  closeDB()
+  if(member != None and getPresent(name,username) != None):
+    final = int(member)-int(getPresent(name,username))
+  else:
+    final = 0
+  return final
+
+#getAbsent('New','sharon')
+
 # Returns club members + attendance - WORKS
 def getClubMembers(name):
   initializeDB()
@@ -98,7 +134,6 @@ def getClubMembers(name):
   allMembers = c.fetchall()
   allMembers = [a for a in allMembers[0]]
   allMembers = str(allMembers[0]).replace("'",'"').replace("u","")
-  print(allMembers)
   c.execute('UPDATE clubs SET club_members = ? where (club_name = ?);',(allMembers, name))
   allKeys = json.loads(allMembers).keys()
   allValues = json.loads(str(allMembers).replace("'",'"')).values()
@@ -228,7 +263,7 @@ def addNewClub(name, username,description):
   all_clubs = [a[0] for a in all_clubs]
   memberFormat = '{"'+username+'":0}'
   if str(name) not in all_clubs:
-    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description) VALUES (?,?,?,?);', (name,memberFormat,username,description))
+    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description, total) VALUES (?,?,?,?,?);', (name,memberFormat,username,description,0))
   c.execute('SELECT member from users WHERE (username = ?);',(username,))
   member_clubs = c.fetchall()
   if(member_clubs):

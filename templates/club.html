@@ -31,6 +31,7 @@ font-size: 16pt;
 font-family: Arial;
 }
 
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
@@ -46,12 +47,14 @@ text-align: center;
 }
 
 
-a{
-vertical-align: middle;
-line-height: 90px; 
-top: 50%;
+h5{
+top: 70%;
 left: 50%;
+transform: translateX(-25%) translateY(-48%);
+margin-top: 2%;
 }
+
+
 
 .container {
     padding: 2px 16px;
@@ -66,7 +69,7 @@ left: 50%;
 <div class="content">
 
     <h1>{{clubName}}</h1>
-    <h5>{{clubDesc}}</h5>
+    <h4>{{clubDesc}}</h4>
     <br><br>
 
     <form action="/join/{{clubName}}/" method="POST">
@@ -83,10 +86,8 @@ left: 50%;
 
 <div class="card">
   <div class="container">
-    <h4><b></b></h4> 
-    <p>{{msg}}</p> 
+    <h5>{{msg}}</h5> 
   </div>
-<br>
 </div>
 <br>
     {% endfor %}
@@ -117,7 +118,7 @@ left: 50%;
     
 <!--    <svg width="960" height="200"></svg>-->
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    
+<h2>Your Attendance</h2>
 <script type="text/javascript">
 
     var w = 200,                        //width
@@ -125,9 +126,8 @@ left: 50%;
     r = 100,                            //radius
     color = d3.scale.category20c();     //builtin range of colors
 
-    data = [{"label":"one", "value":20}, 
-            {"label":"two", "value":50}, 
-            {"label":"three", "value":30}];
+    data = [{"label":"present", "value":{{present}}}, 
+            {"label":"absent", "value":{{absent}}}];
     
     var vis = d3.select("body")
         .append("svg:svg")              //create the SVG element inside the <body>
@@ -161,7 +161,7 @@ left: 50%;
                 return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
             })
             .attr("text-anchor", "middle")                          //center the text on it's origin
-            .text(function(d, i) { return data[i].label; });        //get the label from our original data array
+            .text(function(d, i) { return data[i].label + ": "+data[i].value; });        //get the label from our original data array
         
     </script>
 
