@@ -63,17 +63,30 @@ def getMemGrade(id):
   closeDB()
   return out
 
+
+# WORKS
 def getMemMembers(name):
   initializeDB()
   c.execute('SELECT member FROM users WHERE (username = ?);',(name,))
   out = c.fetchall()
+  out = out[0][0]
+  if (out != None and out != []):
+    out = out.split(",")
+  else:
+    out = []
   closeDB()
   return out
 
+# WORKS
 def getMemAdmins(name):
   initializeDB()
   c.execute('SELECT admin FROM users WHERE (username = ?);',(name,))
   out = c.fetchall()
+  out = out[0][0]
+  if (out != None and out != []):
+    out = out.split(",")
+  else: 
+    out = []
   closeDB()
   return out
 
@@ -91,21 +104,70 @@ def getClubDesc(name):
   closeDB()
   return out
 
+
+# Returns int of days present - WORKS
+def getPresent(name, username):
+  initializeDB()
+  c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
+  member = c.fetchall()
+  closeDB()
+  if (member != [] and member != None):
+    member = member[0][0]
+    member = json.loads(member.replace("'",'"')).get(username)
+  else:
+    return 0
+  return member
+
+# WORKS
+def getAbsent(name, username):
+  initializeDB()
+  c.execute('SELECT total FROM clubs WHERE (club_name = ?);',(name,))
+  member = c.fetchall()
+  member = member[0][0]
+  closeDB()
+  if(member != None and getPresent(name,username) != None):
+    final = int(member)-int(getPresent(name,username))
+  else:
+    final = 0
+  return final
+
+#getAbsent('New','sharon')
+
 # Returns club members + attendance - WORKS
 def getClubMembers(name):
   initializeDB()
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',[name])
   allMembers = c.fetchall()
   allMembers = [a for a in allMembers[0]]
-  allKeys = json.loads(allMembers[0].replace("'",'"')).keys()
-  allValues = json.loads(allMembers[0].replace("'",'"')).values()
+  allMembers = str(allMembers[0]).replace("'",'"').replace("u","")
+  c.execute('UPDATE clubs SET club_members = ? where (club_name = ?);',(allMembers, name))
+  allKeys = json.loads(allMembers).keys()
+  allValues = json.loads(str(allMembers).replace("'",'"')).values()
   lista = []
+  allKeys = list(allKeys)
+  allValues = list(allValues)
   for a in range(len(allKeys)):
     lista.append(str(allKeys[a])+" : "+str(allValues[a]))
   closeDB()
   return lista
 
 #print(getClubMembers("Gam"))
+
+# Returns club announcements - WORKS
+def getAnnouncements(name):
+  initializeDB()
+  c.execute('SELECT announcements FROM clubs WHERE (club_name = ?);',[name])
+  allAnn = c.fetchall()
+  allAnn = allAnn[0][0]
+#  allAnn = allAnn.replace("(None,)","")
+  if (allAnn != '' and allAnn != None):
+    allAnn = allAnn.split(",")
+  else:
+    allAnn = []
+  closeDB()
+  return allAnn[2:]
+
+#print(getAnnouncements("Garl"))
 
 def getClubAdmins(name):
   initializeDB()
@@ -190,12 +252,24 @@ def addUserToClub(name, username):
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
   allMembers = c.fetchall()
   allMembers = json.loads(allMembers[0][0].replace("'",'"'))
-  allMembers[username] = 0
-  allMembers = str(allMembers)
+  if (allMembers[username] == None):
+    allMembers[username] = 0
+  allMembers = str(allMembers).replace("'",'"')
+  c.execute('SELECT member from users WHERE (username = ?);',(username,))
+  allMemMem = c.fetchall()
+  allMemMem = allMemMem[0][0]
+  if (allMemMem != None and allMemMem != []):
+    allMemMem = allMemMem.split(",")
+    if (name not in allMemMem):
+      allMemMem = allMemMem.append(name)
+  else:
+    allMemMem = list(name)
+  allMemMem = ",".join(list(allMemMem))
   c.execute('UPDATE clubs SET club_members = ? WHERE (club_name = ?);',(allMembers, name))
+  c.execute('UPDATE users SET member = ? WHERE (username = ?);',(allMemMem, username))
   closeDB()
 
-#addUserToClub('Gam','gerry')
+#addUserToClub('New','tom')
 
 #Adds club, adds club to admin+member list for founding user - WORKS
 def addNewClub(name, username,description):
@@ -203,9 +277,9 @@ def addNewClub(name, username,description):
   c.execute('SELECT club_name from clubs;')
   all_clubs = c.fetchall()
   all_clubs = [a[0] for a in all_clubs]
-  memberFormat = "{"+username+":0}"
+  memberFormat = '{"'+username+'":0}'
   if str(name) not in all_clubs:
-    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description) VALUES (?,?,?,?);', (name,memberFormat,username,description))
+    c.execute('INSERT INTO clubs (club_name, club_members, club_admins, description, total) VALUES (?,?,?,?,?);', (name,memberFormat,username,description,0))
   c.execute('SELECT member from users WHERE (username = ?);',(username,))
   member_clubs = c.fetchall()
   if(member_clubs):
@@ -306,14 +380,16 @@ def addAnnouncements(name, announcement):
   allAnnounce = c.fetchall()
   if(allAnnounce[0][0] != None):
     allAnnounce = [a[0] for a in allAnnounce]
-  if(allAnnounce[0]!='' and allAnnounce[0] !=None):
-    allAnnounce = allAnnounce[0]+","+announcement
+  allAnnounce = allAnnounce[0]
+  if(allAnnounce!='' and allAnnounce !=None):
+    allAnnounce = str(allAnnounce)
+    allAnnounce += ","+str(announcement)
   else:
     allAnnounce = announcement
   c.execute('UPDATE clubs SET announcements = ? WHERE (club_name = ?);',(allAnnounce,name))
   closeDB()
 
-#addAnnouncements("Garl", "We are meeting in the bigger library!")
+#addAnnouncements("Garl", "We are meeting in the bigger library today!")
 
 # Checks if user is admin - WORKS
 def checkAdmin(name, username):
@@ -321,6 +397,8 @@ def checkAdmin(name, username):
   c.execute('SELECT club_admins from clubs WHERE (club_name = ?);',(name,))
   allAdmins = c.fetchall()
   allAdmins = allAdmins[0][0]
+  print(allAdmins)
+  print(username in allAdmins)
   closeDB()
   return username in allAdmins
 
