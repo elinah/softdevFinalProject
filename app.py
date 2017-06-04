@@ -83,7 +83,9 @@ def add_clubs():
 @app.route('/clubpage/<club>/', methods=["GET","POST"])
 def clubpage(club):
   allMembers = db.getClubMembers(club)
-  return render_template('club.html', clubName = club, clubDesc = db.getClubDesc(club)[0][0], members = allMembers)
+  allAnn = db.getAnnouncements(club)
+  isAdmin = db.checkAdmin(club,session['username'])
+  return render_template('club.html', clubName = club, clubDesc = db.getClubDesc(club)[0][0], members = allMembers, announcements = allAnn, admin = isAdmin)
 
 @app.route('/add-new-club/', methods=["GET", "POST"])
 def add_new_club():
@@ -100,6 +102,11 @@ def inc(clubName, username):
   username = username.replace(' ','').replace(':','')
   username = ''.join(i for i in username if not i.isdigit())
   db.addAttendance(clubName, username)
+  return redirect('/clubpage/'+clubName+'/')
+
+@app.route('/announce/<clubName>/', methods=["GET","POST"])
+def announce(clubName):
+  db.addAnnouncements(clubName,request.form['announce'])
   return redirect('/clubpage/'+clubName+'/')
 
 @app.route('/home/')

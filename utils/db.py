@@ -112,6 +112,22 @@ def getClubMembers(name):
 
 #print(getClubMembers("Gam"))
 
+# Returns club announcements - WORKS
+def getAnnouncements(name):
+  initializeDB()
+  c.execute('SELECT announcements FROM clubs WHERE (club_name = ?);',[name])
+  allAnn = c.fetchall()
+  allAnn = allAnn[0][0]
+#  allAnn = allAnn.replace("(None,)","")
+  if (allAnn != '' and allAnn != None):
+    allAnn = allAnn.split(",")
+  else:
+    allAnn = []
+  closeDB()
+  return allAnn[2:]
+
+#print(getAnnouncements("Garl"))
+
 def getClubAdmins(name):
   initializeDB()
   c.execute('SELECT club_admins FROM clubs WHERE (club_name = ?);',[name])
@@ -313,14 +329,16 @@ def addAnnouncements(name, announcement):
   allAnnounce = c.fetchall()
   if(allAnnounce[0][0] != None):
     allAnnounce = [a[0] for a in allAnnounce]
-  if(allAnnounce[0]!='' and allAnnounce[0] !=None):
-    allAnnounce = allAnnounce[0]+","+announcement
+  allAnnounce = allAnnounce[0]
+  if(allAnnounce!='' and allAnnounce !=None):
+    allAnnounce = str(allAnnounce)
+    allAnnounce += ","+str(announcement)
   else:
     allAnnounce = announcement
   c.execute('UPDATE clubs SET announcements = ? WHERE (club_name = ?);',(allAnnounce,name))
   closeDB()
 
-#addAnnouncements("Garl", "We are meeting in the bigger library!")
+#addAnnouncements("Garl", "We are meeting in the bigger library today!")
 
 # Checks if user is admin - WORKS
 def checkAdmin(name, username):
@@ -328,6 +346,8 @@ def checkAdmin(name, username):
   c.execute('SELECT club_admins from clubs WHERE (club_name = ?);',(name,))
   allAdmins = c.fetchall()
   allAdmins = allAdmins[0][0]
+  print(allAdmins)
+  print(username in allAdmins)
   closeDB()
   return username in allAdmins
 
