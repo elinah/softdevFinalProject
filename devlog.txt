@@ -20,6 +20,10 @@ sharonL -- 2017-6-1 2:54
 	Fixed addNewClub and deleteClub methods
 	Added more templates for individual clubs
 
-sharonL -- 2016-6-2 12:19
+sharonL -- 2017-6-2 12:19
 	Added admin checker, attendance recorder to club pages
 	Created attendance and club member/admin modifier
+
+sharon: -- 2017-6-3 9:39
+	Added pie chart
+	Need to: Add button to increment total days
