@@ -179,12 +179,15 @@ def getAllAnn(username):
   c.execute('SELECT member FROM users WHERE (username = ?);',(username,))
   out = c.fetchall()
   out = out[0][0]
-  out = out.split(",")
-  allAnn = []
-  for a in out:
-    for b in getAnnouncements(a):
-      allAnn.append(a+": "+b)
-  return allAnn
+  if (out != None and out != '' and out != []):
+    out = out.split(",")
+    allAnn = []
+    for a in out:
+      for b in getAnnouncements(a):
+        allAnn.append(a+": "+b)
+    return allAnn
+  else:
+    return []
 
 #print(getAllAnn('sharon'))
 
