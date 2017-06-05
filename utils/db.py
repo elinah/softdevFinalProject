@@ -284,8 +284,8 @@ def addUserToClub(name, username):
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
   allMembers = c.fetchall()
   allMembers = json.loads(allMembers[0][0].replace("'",'"'))
-  if (allMembers[username] == None):
-    allMembers[username] = 0
+  if (str(username) not in allMembers.keys()):
+    allMembers[str(username)] = 0
   allMembers = str(allMembers).replace("'",'"')
   c.execute('SELECT member from users WHERE (username = ?);',(username,))
   allMemMem = c.fetchall()
