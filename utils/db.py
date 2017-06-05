@@ -164,9 +164,9 @@ def getAnnouncements(name):
   initializeDB()
   c.execute('SELECT announcements FROM clubs WHERE (club_name = ?);',[name])
   allAnn = c.fetchall()
-#  allAnn = allAnn.replace("(None,)","")                                                                                                                                                                    
+#  allAnn = allAnn.replace("(None,)","")                                                                                                                                                                   
+  allAnn = allAnn[0][0]
   if (allAnn != '' and allAnn != None and allAnn != []):
-    allAnn = allAnn[0][0]
     allAnn = allAnn.split(",")
   else:
     allAnn = []
