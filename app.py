@@ -85,10 +85,11 @@ def clubpage(club):
   allMembers = db.getClubMembers(club)
   allAnn = db.getAnnouncements(club)
   isAdmin = db.checkAdmin(club,session['username'])
+  isMember = db.checkMember(club,session['username'])
   present = db.getPresent(club,session['username']) 
   absent = db.getAbsent(club,session['username'])
   tdays = db.getTotalDays(club)
-  return render_template('club.html', clubName=club, clubDesc=db.getClubDesc(club)[0][0], members=allMembers, announcements = allAnn, admin = isAdmin, present = present, absent=absent, totaldays = tdays)
+  return render_template('club.html', clubName=club, clubDesc=db.getClubDesc(club)[0][0], members=allMembers, announcements = allAnn, admin = isAdmin, present = present, absent=absent, totaldays = tdays, member = isMember)
 
 @app.route('/add-new-club/', methods=["GET", "POST"])
 def add_new_club():

@@ -73,10 +73,13 @@ margin-top: 2%;
     <h1>{{clubName}}</h1>
     <h4>{{clubDesc}}</h4>
     <br><br>
-
+{% if not admin %}
+{% if not member %}
     <form action="/join/{{clubName}}/" method="POST">
       <input  type="submit" class="btn btn-success" name="join" value="Join Club">
     </form>
+{% endif %}
+{% endif %}
 <hr>
     <h1>Announcements</h1>
 

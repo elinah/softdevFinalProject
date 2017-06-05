@@ -433,7 +433,16 @@ def checkAdmin(name, username):
   closeDB()
   return username in allAdmins
 
-#checkAdmin('Book Club','sharon')
+def checkMember(name, username):
+  initializeDB()
+  c.execute('SELECT club_members from clubs WHERE (club_name = ?);',(name,))
+  allAdmins = c.fetchall()
+  allAdmins = allAdmins[0][0]
+  allAdmins = json.loads(allAdmins).keys()
+  closeDB()
+  return username in allAdmins
+
+#print(checkMember('New','elina'))
 
 # To Do: changeToAdmin, removeAdmin, changeGrade, changeName, changePassword, incorporate emails
 # 
