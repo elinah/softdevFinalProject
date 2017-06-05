@@ -1,5 +1,5 @@
 from itertools import chain
-import sqlite3, json
+import sqlite3, json, time
 
 c = None
 db = None
@@ -183,7 +183,7 @@ def getAllAnn(username):
   allAnn = []
   for a in out:
     for b in getAnnouncements(a):
-      allAnn.append(b)
+      allAnn.append(a+": "+b)
   return allAnn
 
 #print(getAllAnn('sharon'))
@@ -411,9 +411,9 @@ def addAnnouncements(name, announcement):
   allAnnounce = allAnnounce[0]
   if(allAnnounce!='' and allAnnounce !=None):
     allAnnounce = str(allAnnounce)
-    allAnnounce += ","+str(announcement)
+    allAnnounce += ","+time.strftime("%d/%m/%Y")+": "+str(announcement)
   else:
-    allAnnounce = announcement
+    allAnnounce = time.strftime("%d/%m/%Y")+": "+announcement
   c.execute('UPDATE clubs SET announcements = ? WHERE (club_name = ?);',(allAnnounce,name))
   closeDB()
 

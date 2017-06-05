@@ -117,6 +117,11 @@ def announce(clubName):
   db.addAnnouncements(clubName,request.form['announce'])
   return redirect('/clubpage/'+clubName+'/')
 
+@app.route('/announcement/',methods=["POST"])
+def announcement(clubName):
+  text = request.form['text'];
+  return json.dumps({'status':'OK','text':text});
+
 @app.route('/home/')
 def home():
   your_clubs = db.getMemMembers(session['username'])

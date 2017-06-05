@@ -58,6 +58,6 @@
 		</center>
 		</div>
 
-<script src="../static/js/validate.js"></script>		 
+		 
 
 {% endblock %}

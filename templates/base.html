@@ -26,7 +26,6 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-        <!-- <li class="{% block active2 %}{% endblock %}"><a href="/class/">Class</a></li> -->
 	<li><a href="/add-clubs/">Add Club</a></li>
   <!--<li><a href="/browse">Browse</a></li>-->
       </ul>
@@ -36,6 +35,8 @@
           <p class="navbar-text">Signed in as <a href="/profile" class="navbar-link">{{ session.username }}</a></p>
           <li><a href="/logout/">Logout</a></li>
         {% else %}
+
+
 <!--           <form class="navbar-form navbar-left">
             <div class="form-group">
               <input type="text" placeholder="username" class="form-control">
@@ -57,13 +58,9 @@
             		      <form class="form" role="form" method="POST" action="/login/" accept-charset="UTF-8">
                   			<div class="form-group">
                           Username: <input class="form-control" placeholder="Username" type="text" name="username" required>
-
                           <br/>
-
                           Password:&thinsp; <input class="form-control" type="password" name="password" placeholder="Password" required>
-
                           <br/>
-
                           <input class="btn btn-primary btn-block" type="submit" name="button" value="login" action="/auth/">
                   			</div>
             		      </form>
