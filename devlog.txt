@@ -49,3 +49,5 @@ elinaH -- 2017-6-5 22:42
 
 elinaH -- 2017-6-6 00:02
 	Fixed error in changing the password 
+elinaH -- 2017-6-6 2:24
+	Fixed the text in the pie charts so that it's not inside and doesn't get cut off
