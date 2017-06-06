@@ -16,6 +16,9 @@ sharonL -- 2017-5-30 02:01
 sharonL -- 2017-5-31 09:41
 	Added jinja templating to display clubs for members
 
+elinaH -- 2017-5-31 12:36
+	Added a settings template
+
 sharonL -- 2017-6-1 2:54
 	Fixed addNewClub and deleteClub methods
 	Added more templates for individual clubs
@@ -24,11 +27,25 @@ sharonL -- 2017-6-2 12:19
 	Added admin checker, attendance recorder to club pages
 	Created attendance and club member/admin modifier
 
-sharonL: -- 2017-6-3 9:39
+elinaH -- 2017-6-2 12:21
+	Added methods for changing password, name, and grade in db.py
+
+sharonL -- 2017-6-3 9:39
 	Added pie chart
 	Need to: Add button to increment total days
 
-sharon: -- 2017-6-4 15:03
+sharonL -- 2017-6-4 15:03
 	Added announcements to front page
 	Figuring out how to add ajax calls into project
 	Changing format of announcements to include club and timestamp
+
+elinaH -- 2017-6-4 22:15
+	Added settings methods to app.py that allow users to change password, name, and grade
+
+elinaH -- 2017-6-5 22:42
+	Improved settings methods
+	Fixed logout so that there wouldn't be any error messages if you logged out
+	Added settings to the navigation bar
+
+elinaH -- 2017-6-6 00:02
+	Fixed error in changing the password 
