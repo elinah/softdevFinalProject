@@ -127,9 +127,14 @@ text-align: center;
     <div class="row">
     {% for person in members %}
       <div class="col-sm-4">{{person}}</div>
-      <form action="/inc-attendance/{{clubName}}/{{person}}/" method="POST">
-	<input  type="submit" class="btn btn-success" name="checkin" value="Check In">
+      <div class="col-sm-8">
+      <form action="/sub-attendance/{{clubName}}/{{person}}/" method="POST">
+	<input  type="submit" class="btn btn-success" name="checkin" value="-">
       </form>
+      <form action="/inc-attendance/{{clubName}}/{{person}}/" method="POST">
+	<input  type="submit" class="btn btn-success" name="checkin" value="+">
+      </form>
+      </div>
     {% endfor %}
     </div>
     {% endif %}

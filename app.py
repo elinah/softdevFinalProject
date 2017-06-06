@@ -112,6 +112,13 @@ def inc(clubName, username):
   db.addAttendance(clubName, username)
   return redirect('/clubpage/'+clubName+'/')
 
+@app.route('/sub-attendance/<clubName>/<username>/', methods=["GET","POST"])
+def sub(clubName, username):
+  username = username.replace(' ','').replace(':','')
+  username = ''.join(i for i in username if not i.isdigit())
+  db.subAttendance(clubName, username)
+  return redirect('/clubpage/'+clubName+'/')
+
 @app.route('/inc-total/<clubName>/', methods=["GET","POST"])
 def inctotal(clubName):
   db.addTotal(clubName)

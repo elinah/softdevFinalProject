@@ -215,15 +215,21 @@ def updateGrade(username, newGrade):
   closeDB()
 
 #Changes password of user
-def changePass(username, newPass):
+def changePass(newPass, username):
   initializeDB()
   c.execute('UPDATE users SET password = ? WHERE (username = ?);',(newPass,username))
   closeDB()
 
 #Changes name of user
-def changeName(username, newName):
+def changeName(newName, username):
   initializeDB()
   c.execute('UPDATE users SET name = ? WHERE (username = ?);',(newName,username))
+  closeDB()
+
+#Changes grade of user
+def changeGrade(newGrade, username):
+  initializeDB()
+  c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade,username))
   closeDB()
 
 #***********************************************
@@ -260,7 +266,7 @@ def addAttendance(name, username):
   c.execute('UPDATE clubs SET club_members = ? WHERE (club_name = ?);',(allMembers, name))
   closeDB()
 
-def subAttendance(name, username):
+def subtractAttendnace(name, username):
   initializeDB()
   c.execute('SELECT club_members FROM clubs WHERE (club_name = ?);',(name,))
   allMembers = c.fetchall()
@@ -306,7 +312,6 @@ def addUserToClub(name, username):
   c.execute('UPDATE users SET member = ? WHERE (username = ?);',(allMemMem, username))
   closeDB()
 
-#addUserToClub('New','tom')
 
 #Adds club, adds club to admin+member list for founding user - WORKS
 def addNewClub(name, username,description):
@@ -344,8 +349,6 @@ def addNewClub(name, username,description):
   c.execute('UPDATE users SET admin = ? WHERE (username = ?);',(admin_clubs, username))
   closeDB()
 
-#addNewClub("Snow Club","sharon")
-
 #Deletes club - WORKS
 def deleteClub(name):
   initializeDB()
@@ -381,12 +384,10 @@ def deleteClub(name):
       count += 1
   closeDB()
 
-#deleteClub("Fo Club")
-
-#Adds user
-def addUser(username, password, name, grade):
+#Adds user - WORKS
+def addUser(name, password):
   initializeDB()
-  c.execute('INSERT INTO users (username, password, name, grade) VALUES (?,?,?,?);',(username, password, name, grade))
+  c.execute('INSERT INTO users (username, password) VALUES (?,?);',(name, password))
   closeDB()
 
 #Adds club to member list for user
@@ -423,7 +424,6 @@ def addAnnouncements(name, announcement):
     allAnnounce += ","+time.strftime("%d/%m/%Y")+": "+str(announcement)
   else:
     allAnnounce = time.strftime("%d/%m/%Y")+": "+announcement
-  allAnnounce = allAnnounce.replace('(None,),','')
   c.execute('UPDATE clubs SET announcements = ? WHERE (club_name = ?);',(allAnnounce,name))
   closeDB()
 
@@ -449,7 +449,12 @@ def checkMember(name, username):
   closeDB()
   return username in allAdmins
 
-#print(checkMember('New','elina'))
+def deleteClub(name, username):
+  initializeDB()
+  
+  closeDB()
+
+
 
 # To Do: changeToAdmin, removeAdmin, changeGrade, changeName, changePassword, incorporate emails
 # 
