@@ -29,8 +29,10 @@ ul{
     transition: 0.3s;
     width: 40%;
     border-radius: 5px;
-background: #98fb98;
+background: white;
+padding: 5px;
 margin: auto;
+color: green;
 text-align: center;
 }
 
@@ -38,12 +40,7 @@ text-align: center;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-h5{
-top: 70%;
-left: 50%;
-transform: translateX(-25%) translateY(-48%);
-margin-top: 2%;
-}
+
 </style>
 
  {% endblock %}
@@ -54,16 +51,16 @@ margin-top: 2%;
 
     <h1>Current clubs:</h1>
       <ul>
-	{% for club in clubs %}
+  {% for club in clubs %}
         <li><a href="/clubpage/{{club[0]}}/">{{club[0]}}</a></li>
-	{% endfor %}
+  {% endfor %}
       </ul>
     
     <h1>Clubs you're a member of:</h1>
       <ul>
-	{% for club in your_clubs %}
+  {% for club in your_clubs %}
         <li><a href="/clubpage/{{club}}/">{{club}}</a></li>
-	{% endfor %}
+  {% endfor %}
       </ul>
     
     <h1>Clubs you're an admin of:</h1>
@@ -76,11 +73,13 @@ margin-top: 2%;
 <hr>
 
     <h1>All Announcements</h1>
-    <div class="row">
+         <div class="container">
+    
     {% for msg in ann %}
+    <div class="row">
     <div class="card">
-      <div class="container">
-	<h5>{{msg}}</h5>
+ 
+  {{msg}}
       </div>
     </div>
     <br>
