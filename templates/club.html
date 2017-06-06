@@ -139,8 +139,8 @@ text-align: center;
 <h2>Your Attendance</h2>
 <script type="text/javascript">
 
-    var w = 200,                        //width
-    h = 300,                            //height
+    var w = 400,                        //width
+    h = 400,                            //height
     r = 100,                            //radius
     color = d3.scale.category20c();     //builtin range of colors
 
@@ -153,7 +153,7 @@ text-align: center;
             .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
             .attr("height", h)
         .append("svg:g")                //make a group to hold our pie chart
-            .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+            .attr("transform", "translate(" + w/2 + "," + h/2 + ")")    //move the center of the pie chart from 0, 0 to radius, radius
 
     var arc = d3.svg.arc().outerRadius(r);
 
@@ -169,7 +169,7 @@ text-align: center;
                 .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
                 .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
 
-        arcs.append("svg:text")                                     //add a label to each slice
+        /*arcs.append("svg:text")        //add a label to each slice
                 .attr("transform", function(d) {                    //set the label's origin to the center of the arc
                 //we have to make sure to set these before calling arc.centroid
                 d.innerRadius = 0;
@@ -177,7 +177,24 @@ text-align: center;
                 return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
             })
             .attr("text-anchor", "middle")                          //center the text on it's origin
-            .text(function(d, i) { return data[i].label + ": "+data[i].value; });        //get the label from our original data array
+            .text(function(d, i) { return data[i].label + ": "+data[i].value; });        //get the label from our original data array*/
+        arcs.append("svg:text")
+          .attr("transform", function(d) {
+              d.innerRadius = 0;
+              d.outerRadius = r;
+              var cent = arc.centroid(d),
+                  x = cent[0],
+                  y = cent[1],
+                  h = Math.sqrt(x*x + y*y);       //use pythagorean theorem to find hypotenuse
+              return "translate(" + (x/h * (r + 30)) +  ',' +
+                 (y/h * (r + 30)) +  ")"; 
+          })
+          .attr("dy", ".35em")
+          .attr("text-anchor", function(d) {
+              return (d.endAngle + d.startAngle)/2 > Math.PI ?        //determines which side it should start on, depending on if it's past the center
+                  "end" : "start";
+          })
+          .text(function(d, i) { return data[i].label + ": "+data[i].value; });
         
     </script>
 
