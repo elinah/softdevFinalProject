@@ -215,21 +215,15 @@ def updateGrade(username, newGrade):
   closeDB()
 
 #Changes password of user
-def changePass(newPass, username):
+def changePass(username, newPass):
   initializeDB()
   c.execute('UPDATE users SET password = ? WHERE (username = ?);',(newPass,username))
   closeDB()
 
 #Changes name of user
-def changeName(newName, username):
+def changeName(username, newName):
   initializeDB()
   c.execute('UPDATE users SET name = ? WHERE (username = ?);',(newName,username))
-  closeDB()
-
-#Changes grade of user
-def changeGrade(newGrade, username):
-  initializeDB()
-  c.execute('UPDATE users SET grade = ? WHERE (username = ?);',(newGrade,username))
   closeDB()
 
 #***********************************************
@@ -378,9 +372,9 @@ def deleteClub(name):
 #deleteClub("Fo Club")
 
 #Adds user
-def addUser(name, password):
+def addUser(username, password, name, grade):
   initializeDB()
-  c.execute('INSERT INTO users (username, password) VALUES (?,?);',(name, password))
+  c.execute('INSERT INTO users (username, password, name, grade) VALUES (?,?,?,?);',(username, password, name, grade))
   closeDB()
 
 #Adds club to member list for user

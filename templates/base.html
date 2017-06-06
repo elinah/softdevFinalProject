@@ -27,12 +27,13 @@
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
 	<li><a href="/add-clubs/">Add Club</a></li>
+  <li><a href="/settings/">Settings</a></li>
   <!--<li><a href="/browse">Browse</a></li>-->
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         {% if session.username %}
-          <p class="navbar-text">Signed in as <a href="/profile" class="navbar-link">{{ session.username }}</a></p>
+          <p class="navbar-text">Signed in as {{ session.username }}</p>
           <li><a href="/logout/">Logout</a></li>
         {% else %}
 

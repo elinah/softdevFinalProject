@@ -47,14 +47,16 @@ def login():
 @app.route('/register/', methods = ['POST'])
 def register():
   global msg
-  if 'username' in request.form and 'password' in request.form:
+  if 'username' in request.form and 'password' in request.form and 'confirmPassword' in request.form and 'name' in request.form and 'grade' in request.form:
     username = request.form['username']
     password = request.form['password']
-    confirm = request.form['confirm_password']    
-    if username and password and confirm:
+    confirm = request.form['confirmPassword']
+    name = request.form['name']
+    grade = request.form['grade']
+    if username and password and confirm and name and grade:
       if not db.isRegistered(username):
         if password == confirm:
-          db.addUser(username, hash(password))
+          db.addUser(username, hash(password), name, grade)
           session['username'] = username
         else:
           msg = 'Passwords must match!'
@@ -68,8 +70,10 @@ def register():
 
 @app.route("/logout/")
 def logout():
+  global msg
   if isLoggedIn():
     session.pop("username")
+    msg = ' '
   return redirect(url_for("default"))
 
 @app.route('/club/')
@@ -134,6 +138,69 @@ def home():
 @app.route('/settings/')
 def settings():
   return render_template('settings.html')
+
+@app.route('/settings/changePass', methods=["POST"])
+def changePass():
+  msg1 = ' '
+  if isLoggedIn():
+    username = session['username']
+    print request.form
+    if 'currPass' in request.form and 'newPass' in request.form and 'confirmPass' in request.form:
+      currPass = request.form['currPass']
+      newPass = request.form['newPass']
+      confirmPass = request.form['confirmPass']
+      if currPass and newPass and confirmPass:
+        if db.authUser(username, hash(currPass)):
+          if newPass == currPass:
+            db.changePass(username, hash(newPass))
+            msg1 = "Successfully changed password!"
+          else:
+            msg1 = "Passwords must match!"
+        else:
+          msg1 = "Incorrect password!"
+      else:
+        msg1 = "Please fill out all fields!"
+    else:
+      msg1 = "Please fill out all fields!"
+    return render_template('settings.html', message = msg1)
+  else:
+    return redirect(url_for('default'))
+      
+@app.route('/settings/changeName', methods=["POST"])
+def changeName():
+  msg2 = ' '
+  if isLoggedIn():
+    username = session['username']      
+    if 'newName' in request.form:
+      newName = request.form['newName']
+      if newName:
+        db.changeName(username, newName)
+        msg2 = "Successfully changed name!"
+      else:
+        msg2 = "Please fill out all fields!"
+    else:
+        msg2 = "Please fill out all fields!"
+    return render_template('settings.html', message = msg2)
+  else:
+    return redirect(url_for('default'))
+      
+@app.route('/settings/changeGrade', methods=["POST"])
+def changeGrade():
+  msg3 = ' '
+  if isLoggedIn():
+    username = session['username']
+    if 'newGrade' in request.form:
+      newGrade = request.form['newGrade']
+      if newGrade:
+        db.updateGrade(username, newGrade)
+        msg3 = "Successfully changed grade!"
+      else:
+        msg3 = "Please fill out all fields!"
+    else:
+        msg3 = "Please fill out all fields!"
+    return render_template('settings.html', message = msg3)
+  else:
+    return redirect(url_for('default'))
 
 if __name__ == '__main__':
   app.debug = True

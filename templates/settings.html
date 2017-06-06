@@ -1,11 +1,46 @@
 {% extends "base.html" %}
 
+{% block css %}
+
+<style type="text/css">
+
+body {
+text-align: center;
+}
+
+a:link {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
+.content{
+  padding-top:2vh;
+}
+
+input, select, textarea{
+    color: #ff0000;
+}
+
+textarea:focus, input:focus {
+    color: #ff0000;
+}
+
+
+</style>
+
+{% endblock %}
+
 {% block content %}
 
 <div class="content">
 
+    <h1>{{ message }}</h1>
+
     <p>If you would like to change your password, please enter your information 	below:</p>
-    <form action="/settings/" method="POST">
+    <form action="/settings/changePass" method="POST">
 	Current password: <input type="password" name="currPass"> <br>
 	New password: <input type="password" name="newPass"> <br>
 	Confirm password: <input type="password" name="confirmPass"> <br>
@@ -13,13 +48,13 @@
     </form>
 
     <p>If you would like to change your name, please enter your information 	below:</p>
-    <form action="/settings/" method="POST">
+    <form action="/settings/changeName" method="POST">
 	New name: <input type="text" name="newName"> <br>
 	<input type="submit" name="changeName" value="Change Name">
     </form>
 
     <p>If you would like to change your grade, please enter your information 	below:</p>
-    <form action="/settings/" method="POST">
+    <form action="/settings/changeGrade" method="POST">
 	New grade: <input type="text" name="newGrade"> <br>
 	<input type="submit" name="changeGrade" value="Change Grade">
     </form>

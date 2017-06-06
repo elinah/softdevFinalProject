@@ -33,7 +33,7 @@
 
 	    <div style="color: white; max-width: 314px;" class="co-12">
 			<h1 class="display-4">LOGIN:</h1>
-			<p><i>If you have an account, please login.</i></p>
+			<p><i>If you have an account, please login:</i></p>
 			<form action="/login/" method="POST">
 
 				Username: <input class="form-control" type="text" name="username"> <br>
@@ -50,7 +50,9 @@
 
 				Username: <input class="form-control" type="text" name="username"> <br>
 				Password: <input class="form-control" type="password" name="password"> <br>
-				Confirm password: <input class="form-control" type="password" name="confirm_password"> <br>
+				Confirm password: <input class="form-control" type="password" name="confirmPassword"> <br>
+        Name: <input class="form-control" type="text" name="name"> <br>
+        Grade: <input class="form-control" type="text" name="grade"> <br>
 
 				<input class="btn btn-success btn-block" type="submit" name="button" value="Register" action="/auth/">
 			</form>
