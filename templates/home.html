@@ -9,18 +9,22 @@ text-align: center;
 }
 
 a:link {
-    color: white;
+    color: green;
 }
 
 a:visited {
-    color: white;
+    color: teal;
 }
 
 .content{
   padding-top:2vh;
 }
 
+
 ul{
+  display: table;
+  margin: 0 auto;
+  max-width: 500px;
   list-style: none;
 }
 
@@ -50,16 +54,17 @@ text-align: center;
 <div class="content">
 
     <h1>Current clubs:</h1>
-      <ul>
+      <ul class="list-group">
   {% for club in clubs %}
-        <li><a href="/clubpage/{{club[0]}}/">{{club[0]}}</a></li>
+
+        <li style="margin-bottom: 2px;" class="list-group-item"><a href="/clubpage/{{club[0]}}/">{{club[0]}}</a></li>
   {% endfor %}
       </ul>
     
     <h1>Clubs you're a member of:</h1>
-      <ul>
+      <ul class="list-group">
   {% for club in your_clubs %}
-        <li><a href="/clubpage/{{club}}/">{{club}}</a></li>
+        <li class="list-group-item"><a href="/clubpage/{{club}}/">{{club}}</a></li>
   {% endfor %}
       </ul>
     
