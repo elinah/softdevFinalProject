@@ -89,9 +89,9 @@ text-align: center;
       </ul>
     
     <h1>Clubs you're an admin of:</h1>
-    <ul>
+    <ul class="list-group">
       {% for club in your_admin %}
-      <li><a href="/clubpage/{{club}}/">{{club}}</a></li>
+      <li style="margin-bottom: 2px;" class="list-group-item"><a href="/clubpage/{{club}}/">{{club}}</a></li>
       {% endfor %} 
     </ul>
 
