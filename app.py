@@ -151,7 +151,7 @@ def changePass():
       confirmPass = request.form['confirmPass']
       if currPass and newPass and confirmPass:
         if db.authUser(username, hash(currPass)):
-          if newPass == currPass:
+          if newPass == confirmPass:
             db.changePass(username, hash(newPass))
             msg1 = "Successfully changed password!"
           else:
