@@ -19,8 +19,28 @@ a:visited {
 .content{
   padding-top:2vh;
 }
+.content li{
+     -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);   
 
-
+}
+.content li:hover{
+    box-shadow: 0px 0px 150px #000000;
+    z-index: 2;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.5);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.5);
+    transition: all 200ms ease-in;
+    transform: scale(1.5);
+}
 ul{
   display: table;
   margin: 0 auto;
@@ -34,7 +54,7 @@ ul{
     width: 40%;
     border-radius: 5px;
 background: white;
-padding: 5px;
+padding: 11px;
 margin: auto;
 color: green;
 text-align: center;
@@ -64,7 +84,7 @@ text-align: center;
     <h1>Clubs you're a member of:</h1>
       <ul class="list-group">
   {% for club in your_clubs %}
-        <li class="list-group-item"><a href="/clubpage/{{club}}/">{{club}}</a></li>
+        <li style="margin-bottom: 2px;" class="list-group-item"><a href="/clubpage/{{club}}/">{{club}}</a></li>
   {% endfor %}
       </ul>
     
