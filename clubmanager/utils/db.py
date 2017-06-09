@@ -19,7 +19,7 @@ def initializeDB():
   global c, db
 
   DIR = os.path.dirname(__file__)
-  DIR+= "/"
+  DIR+= "/../"
   file = DIR+"data/data.db"
   db = sqlite3.connect(file)
   c = db.cursor()
