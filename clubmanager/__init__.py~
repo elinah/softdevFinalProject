@@ -156,7 +156,7 @@ def changePass():
   msg1 = ' '
   if isLoggedIn():
     username = session['username']
-    #print request.form
+    print request.form
     if 'currPass' in request.form and 'newPass' in request.form and 'confirmPass' in request.form:
       currPass = request.form['currPass']
       newPass = request.form['newPass']
