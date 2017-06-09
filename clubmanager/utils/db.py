@@ -1,5 +1,5 @@
 from itertools import chain
-import sqlite3, json, time
+import sqlite3, json, time, os
 
 c = None
 db = None
