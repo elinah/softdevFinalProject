@@ -435,9 +435,9 @@ def addAnnouncements(name, announcement):
   allAnnounce = allAnnounce[0]
   if(allAnnounce!='' and allAnnounce !=None):
     allAnnounce = str(allAnnounce)
-    allAnnounce += ","+time.strftime("%d/%m/%Y")+": "+str(announcement)
+    allAnnounce += ","+time.strftime("%m/%d/%Y")+": "+str(announcement)
   else:
-    allAnnounce = time.strftime("%d/%m/%Y")+": "+announcement
+    allAnnounce = time.strftime("%m/%d/%Y")+": "+announcement
   allAnnounce = allAnnounce.replace('(None,),','')
   c.execute('UPDATE clubs SET announcements = ? WHERE (club_name = ?);',(allAnnounce,name))
   closeDB()
