@@ -19,12 +19,8 @@ def initializeDB():
   global c, db
 
   DIR = os.path.dirname(__file__)
-  print "DIR ACCS: " + DIR
-  if not DIR==".":
-    DIR+= "/../"
-    file = DIR+"data/data.db"
-  else:
-    file = "data/data.db"
+  DIR+= "/"
+  file = DIR+"data/data.db"
   db = sqlite3.connect(file)
   c = db.cursor()
   createDB()
