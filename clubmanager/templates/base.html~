@@ -26,12 +26,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-
-	{% if session.username %}
 	<li><a href="/add-clubs/">Add Club</a></li>
   <li><a href="/settings/">Settings</a></li>
   <!--<li><a href="/browse">Browse</a></li>-->
-        {% endif %}
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
