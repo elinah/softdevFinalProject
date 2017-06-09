@@ -40,10 +40,29 @@ textarea:focus, input:focus {
     <h1>Add a club</h1>
     <form action="/add-new-club/" method="POST">
       Club Name: <input type="text" name="club"><br><br>
-      Club Description: <input type="text" name="description"><br><br>
+      Club Description: <input type="text" id="description" name="description"><div id="secret"></div><br><br>
       <input type="submit" class="btn btn-success" name="submit" value="Submit">
     </form>
+  </div>
 
-</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#description").blur(function(){
+       console.log($("#description").value);
+       if ($("#description").val() == ''){
+           $.ajax({success: function(result){
+              $("#secret").html("Description too short");
+           }});
+       }
+       else{
+           $.ajax({success: function(result){
+              $("#secret").html("");
+           }});
+       }
 
+    });
+});
+
+</script>
 {% endblock %}

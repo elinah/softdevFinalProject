@@ -1,11 +1,20 @@
-function checkform(){
-    var name = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    if (name == '' || password == ''){alert("Fill all fields");}
-    else{
-	var name1 = document.getElementById("username").value;
-	var password1 = document.getElementById("password").value;
-    }
-	
-      
+var longerDes = function(){
+    newDes = document.getElementById("description"); 
+    msg = document.getElementById("secret");
+    newDes.blur(function(){
+	$.ajax({
+		url: "length.txt",
+		success: function(d){
+		    $("#div1").html(result);
+		    msg.innerHTML = 'Description too short'
+		    // d = JSON.parse(d);
+		    //if (d["type"] == "teacher"){
+		    //	$("#" + id).remove();
+		    //	makeCalendar(getMonth[0],getMonth[1]);
+		    //};
+		    //} 
+	    })
+    };
+    
 }
+

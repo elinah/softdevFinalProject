@@ -124,6 +124,11 @@ def inctotal(clubName):
   db.addTotal(clubName)
   return redirect('/clubpage/'+clubName+'/')
 
+@app.route('/sub-total/<clubName>/', methods=["GET","POST"])
+def subtotal(clubName):
+  db.subTotal(clubName)
+  return redirect('/clubpage/'+clubName+'/')
+
 @app.route('/announce/<clubName>/', methods=["GET","POST"])
 def announce(clubName):
   db.addAnnouncements(clubName,request.form['announce'])
@@ -208,6 +213,10 @@ def changeGrade():
     return render_template('settings.html', message = msg3)
   else:
     return redirect(url_for('default'))
+
+@app.route('/checkDes/', methods=["POST"])
+def checkDes():
+  pass
 
 if __name__ == '__main__':
   app.debug = True

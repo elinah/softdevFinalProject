@@ -284,6 +284,18 @@ def addTotal(name):
   c.execute('UPDATE clubs SET total = ? WHERE (club_name = ?);',(out,name))
   closeDB()
 
+def subTotal(name):
+  initializeDB()
+  c.execute('SELECT total FROM clubs WHERE (club_name = ?);',(name,))
+  out = c.fetchall()
+  out = out[0][0]
+  if (out == 1 or out == 0 or out == None):
+    out = 0
+  else:
+    out = int(out)-1
+  c.execute('UPDATE clubs SET total = ? WHERE (club_name = ?);',(out,name))
+  closeDB()
+
 # Adds member to club - WORKS (for simple case)
 def addUserToClub(name, username):
   initializeDB()
